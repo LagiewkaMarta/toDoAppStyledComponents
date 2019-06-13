@@ -9,14 +9,15 @@ class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: []
+      todos: [],
     };
   }
   //adding todo
   addTodo = name => {
     let todo = {
       name,
-      id: uuidv4()
+      id: uuidv4(),
+      isEdited: false
     };
  
     const copy = [...this.state.todos, todo];
@@ -31,6 +32,20 @@ class TodoList extends Component {
     const filtered = copy.filter(el => el.id !== id);
     this.setState({ todos: filtered });
   };
+
+  //editing todo 
+  editTodo = (id, val) => {
+    let copy = this.state.todos.map(todo => {
+      if (todo.id === id){
+        return {...todo, name: val, isEdited: !todo.isEdited}
+      }
+      return todo
+    }
+      )
+      this.setState({
+        todos: copy
+      })
+  }
   render() {
     return (
       <div className={this.props.className}>
@@ -44,6 +59,8 @@ class TodoList extends Component {
                 key={el.id}
                 remove={this.removeTodo}
                 name={el.name}
+                edit={this.editTodo}
+                isEdited={el.isEdited}
               />
             ))}
           </ul>
