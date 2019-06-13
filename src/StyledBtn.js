@@ -17,4 +17,5 @@ export const SmallBtn = styled(StyledBtn)`
 height: ${setRem(28)};
 padding: 0 10px;
 font-size: ${setRem(12)};
+margin-left: ${setRem(5)};
 `
