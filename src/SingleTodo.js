@@ -16,12 +16,15 @@ class SingleToDo extends Component {
     });
   };
   render() {
+    const style = {
+      textDecoration: 'line-through'
+    }; 
     let rendered;
     if (!this.props.isEdited) {
       rendered = (
-        <li className={this.props.className}>
+        <li className={this.props.className} >
           {" "}
-          <span>{this.props.name}</span>
+          <span onClick={() => this.props.toggle(this.props.id)} style={this.props.completed ? style : {textDecoration: 'none'}}>{this.props.name}</span>
           <div>
             <SmallBtn onClick={() => this.props.remove(this.props.id)}>
               remove

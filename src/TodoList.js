@@ -17,7 +17,8 @@ class TodoList extends Component {
     let todo = {
       name,
       id: uuidv4(),
-      isEdited: false
+      isEdited: false, 
+      completed: false
     };
  
     const copy = [...this.state.todos, todo];
@@ -46,7 +47,21 @@ class TodoList extends Component {
         todos: copy
       })
   }
+  //toggling todo 
+  toggleTodo = (id) => {
+    let copy = this.state.todos.map(todo => {
+      if (todo.id === id){
+        return {...todo, completed: !todo.completed}
+      }
+      return todo
+    }
+      )
+      this.setState({
+        todos: copy
+      })
+  }
   render() {
+
     return (
       <div className={this.props.className}>
         <div className="todoWrapper">
@@ -57,10 +72,12 @@ class TodoList extends Component {
               <SingleTodo
                 id={el.id}
                 key={el.id}
+                completed={el.completed}
                 remove={this.removeTodo}
                 name={el.name}
                 edit={this.editTodo}
                 isEdited={el.isEdited}
+                toggle={this.toggleTodo}
               />
             ))}
           </ul>
