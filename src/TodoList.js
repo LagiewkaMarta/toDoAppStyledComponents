@@ -30,7 +30,7 @@ class TodoList extends Component {
     const copy = [...this.state.todos];
     const filtered = copy.filter(el => el.id !== id);
     this.setState({ todos: filtered });
-  };
+  }
   render() {
     return (
       <div className={this.props.className}>

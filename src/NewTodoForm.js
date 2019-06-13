@@ -24,7 +24,7 @@ class NewTodoForm extends Component {
   };
   render() {
     return (
-      <Styled onSubmit={e => this.handleAddTodo(e)}>
+      <Styled onSubmit={this.props.add}>
         <div className="container">
           <h3>New Todo</h3>
           <div className="input-container">
