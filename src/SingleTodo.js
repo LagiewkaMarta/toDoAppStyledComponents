@@ -15,24 +15,35 @@ class SingleToDo extends Component {
       [name]: value
     });
   };
+  handleSubmit = (e) => {
+    e.preventDefault();
+       this.props.edit(this.props.id, this.state.val)
+  }
+  handleRemove = () => {
+  this.props.remove(this.props.id)
+  }
   render() {
-    const style = {
+    const styleCompleted = {
       textDecoration: 'line-through'
     }; 
+    const styleInProgress = {
+      textDecoration: 'none'
+    };
+    const {id, completed, remove, name, edit, isEdited, toggle, className} = this.props;
     let rendered;
-    if (!this.props.isEdited) {
+    if (!isEdited) {
       rendered = (
-        <li className={this.props.className} >
+        <li className={className} >
           {" "}
-          <span onClick={() => this.props.toggle(this.props.id)} style={this.props.completed ? style : {textDecoration: 'none'}}>{this.props.name}</span>
+          <span onClick={() => toggle(id)} style={completed ? styleCompleted : styleInProgress}>{name}</span>
           <div>
-            <SmallBtn onClick={() => this.props.remove(this.props.id)}>
+            <SmallBtn onClick={() => remove(id)}>
               remove
             </SmallBtn>
             <SmallBtn
-              onClick={() => this.props.edit(this.props.id, this.state.val)}
+              onClick={() => edit(id, this.state.val)}
             >
-              {this.props.isEdited ? "update" : "edit"}
+              {isEdited ? "update" : "edit"}
             </SmallBtn>
           </div>
         </li>
@@ -40,7 +51,7 @@ class SingleToDo extends Component {
     } else {
       rendered = (
         <li className={this.props.className}>
-          <form onSubmit={(e) => {e.preventDefault(); this.props.edit(this.props.id, this.state.val)}}>
+          <form onSubmit={this.handleSubmit}>
             <input
               name="val"
               id="val"
@@ -49,7 +60,7 @@ class SingleToDo extends Component {
               type="text"
             />
             <div>
-            <SmallBtn type="button" onClick={() => this.props.remove(this.props.id)}>
+            <SmallBtn type="button" onClick={this.handleRemove}>
               remove
             </SmallBtn>
             <SmallBtn type="submit"
