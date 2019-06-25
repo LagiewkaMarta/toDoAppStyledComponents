@@ -6,9 +6,11 @@ In the project directory, you can run:
 
 ### `npm start`
 
+------------
+
 Todo app created to combine my some knowledge of React with React Styled Components. 💅
 
-If intreasted with the outcome, please head to https://todo-styledcomponets.web.app and check my app out!
+If intreasted in the outcome, please head to https://todo-styledcomponets.web.app and check my app out!
 
 ------------
 
