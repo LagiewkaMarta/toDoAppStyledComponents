@@ -21,7 +21,7 @@ If intreasted in the outcome, please head to https://todo-styledcomponets.web.ap
 
 
 #### Features to be added in the future:
-- ability to a due date for the tasks,
+- ability to set due date for the tasks,
 - improved styling,
 - 'Mark as Important' feature, which allows users to highlight the most important tasks and move them to the top of the list,
 
