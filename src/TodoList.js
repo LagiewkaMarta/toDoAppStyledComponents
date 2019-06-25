@@ -14,23 +14,22 @@ class TodoList extends Component {
   }
   //adding todo
   addTodo = name => {
-    let todo = {
+    const todo = {
       name,
       id: uuidv4(),
       isEdited: false, 
       completed: false
     };
- 
-    const copy = [...this.state.todos, todo];
+    if(todo.name.length > 0){
     this.setState({
-      todos: copy
+      todos: [...this.state.todos, todo]
     });
+  }
   };
 
 //removing todo
   removeTodo = id => {
-    const copy = [...this.state.todos];
-    const filtered = copy.filter(el => el.id !== id);
+    const filtered =  [...this.state.todos].filter(el => el.id !== id);
     this.setState({ todos: filtered });
   };
 
