@@ -9,29 +9,58 @@ class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: []
+      todos: [],
     };
   }
   //adding todo
   addTodo = name => {
-    let todo = {
+    const todo = {
       name,
-      id: uuidv4()
+      id: uuidv4(),
+      isEdited: false, 
+      completed: false
     };
- 
-    const copy = [...this.state.todos, todo];
+    if(todo.name.length > 0){
     this.setState({
-      todos: copy
+      todos: [...this.state.todos, todo]
     });
+  }
   };
 
 //removing todo
   removeTodo = id => {
-    const copy = [...this.state.todos];
-    const filtered = copy.filter(el => el.id !== id);
+    const filtered =  [...this.state.todos].filter(el => el.id !== id);
     this.setState({ todos: filtered });
+  };
+
+  //editing todo 
+  editTodo = (id, val) => {
+    let copy = this.state.todos.map(todo => {
+      if (todo.id === id){
+        return {...todo, name: val, isEdited: !todo.isEdited}
+      }
+      return todo
+    }
+      )
+      this.setState({
+        todos: copy
+      })
+  }
+  //toggling todo 
+  toggleTodo = (id) => {
+    let copy = this.state.todos.map(todo => {
+      if (todo.id === id){
+        return {...todo, completed: !todo.completed}
+      }
+      return todo
+    }
+      )
+      this.setState({
+        todos: copy
+      })
   }
   render() {
+
     return (
       <div className={this.props.className}>
         <div className="todoWrapper">
@@ -42,8 +71,12 @@ class TodoList extends Component {
               <SingleTodo
                 id={el.id}
                 key={el.id}
+                completed={el.completed}
                 remove={this.removeTodo}
                 name={el.name}
+                edit={this.editTodo}
+                isEdited={el.isEdited}
+                toggle={this.toggleTodo}
               />
             ))}
           </ul>
