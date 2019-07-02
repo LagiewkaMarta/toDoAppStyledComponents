@@ -13,12 +13,13 @@ class TodoList extends Component {
     };
   }
   //adding todo
-  addTodo = name => {
+  addTodo = (name, important) => {
     const todo = {
       name,
       id: uuidv4(),
       isEdited: false, 
-      completed: false
+      completed: false,
+      important
     };
     if(todo.name.length > 0){
     this.setState({
@@ -77,6 +78,7 @@ class TodoList extends Component {
                 edit={this.editTodo}
                 isEdited={el.isEdited}
                 toggle={this.toggleTodo}
+                important={el.important}
               />
             ))}
           </ul>
@@ -92,7 +94,8 @@ const StyledTodoList = styled(TodoList)`
   ${setBoxShadow({x:'13px', y:'13px', blur:'29px', spread:'5px', color:"#a0a4ba"})};
   min-width: ${setRem(480)};
   max-width: 40vw;
-  margin: 0 auto;
+  margin: 10vh auto;
+  padding-top: 3vh;
   color: ${setColor.fontColor};
  
   .todoWrapper {

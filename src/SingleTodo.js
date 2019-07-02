@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { SmallBtn } from "./StyledBtn";
 import { setFlexRow, setRem, setColor } from "./styles";
 
-
 class SingleToDo extends Component {
   state = {
     val: this.props.name
@@ -15,34 +14,45 @@ class SingleToDo extends Component {
       [name]: value
     });
   };
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
-       this.props.edit(this.props.id, this.state.val)
-  }
+    this.props.edit(this.props.id, this.state.val);
+  };
   handleRemove = () => {
-  this.props.remove(this.props.id)
-  }
+    this.props.remove(this.props.id);
+  };
   render() {
     const styleCompleted = {
-      textDecoration: 'line-through'
-    }; 
-    const styleInProgress = {
-      textDecoration: 'none'
+      textDecoration: "line-through"
     };
-    const {id, completed, remove, name, edit, isEdited, toggle, className} = this.props;
+    const styleInProgress = {
+      textDecoration: "none"
+    };
+    const {
+      id,
+      completed,
+      remove,
+      name,
+      edit,
+      isEdited,
+      toggle,
+      className,
+      important
+    } = this.props;
     let rendered;
     if (!isEdited) {
       rendered = (
-        <li className={className} >
+        <li className={className}>
           {" "}
-          <span onClick={() => toggle(id)} style={completed ? styleCompleted : styleInProgress}>{name}</span>
+          <span
+            onClick={() => toggle(id)}
+            style={completed ? styleCompleted : styleInProgress}
+          >
+            {name}
+          </span>
           <div>
-            <SmallBtn onClick={() => remove(id)}>
-              remove
-            </SmallBtn>
-            <SmallBtn
-              onClick={() => edit(id, this.state.val)}
-            >
+            <SmallBtn onClick={() => remove(id)}>remove</SmallBtn>
+            <SmallBtn onClick={() => edit(id, this.state.val)}>
               {isEdited ? "update" : "edit"}
             </SmallBtn>
           </div>
@@ -60,13 +70,12 @@ class SingleToDo extends Component {
               type="text"
             />
             <div>
-            <SmallBtn type="button" onClick={this.handleRemove}>
-              remove
-            </SmallBtn>
-            <SmallBtn type="submit"
-            >
-              {this.props.isEdited ? "update" : "edit"}
-            </SmallBtn>
+              <SmallBtn type="button" onClick={this.handleRemove}>
+                remove
+              </SmallBtn>
+              <SmallBtn type="submit">
+                {this.props.isEdited ? "update" : "edit"}
+              </SmallBtn>
             </div>
           </form>
         </li>
@@ -78,11 +87,18 @@ class SingleToDo extends Component {
 
 export default styled(SingleToDo)`
   width: 100%;
+
   background-color: ${setColor.singleTodoColor};
+  ${({ important }) =>
+    important &&
+    `background-color: ${setColor.accentColor};
+    font-weight: bold;
+  `};
+
   ${setFlexRow({ x: "space-between" })};
   padding: ${setRem(10)} ${setRem(20)};
   margin-top: ${setRem(20)};
-  form{
+  form {
     ${setFlexRow({ x: "space-between" })};
     width: 100%;
   }
