@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import Styled from "./NewTodoForm";
 import styled from "styled-components";
 import SingleTodo from "./SingleTodo";
@@ -10,8 +13,21 @@ class TodoList extends Component {
     super(props);
     this.state = {
       todos: [],
+      open: false
     };
   }
+  //opening snackbar 
+   handleOpenSnackbar = () => {
+    this.setState({
+      open: true
+    })
+  }
+    //closing snackbar 
+    handleCloseSnackbar = () => {
+      this.setState({
+        open: false
+      })
+    }
   //adding todo
   addTodo = (name, important) => {
     const todo = {
@@ -31,7 +47,7 @@ class TodoList extends Component {
 //removing todo
   removeTodo = id => {
     const filtered =  [...this.state.todos].filter(el => el.id !== id);
-    this.setState({ todos: filtered });
+    this.setState({ todos: filtered, open:true });
   };
 
   //editing todo 
@@ -44,7 +60,7 @@ class TodoList extends Component {
     }
       )
       this.setState({
-        todos: copy
+        todos: copy,
       })
   }
   //toggling todo 
@@ -63,6 +79,7 @@ class TodoList extends Component {
   render() {
 
     return (
+      <>
       <div className={this.props.className}>
         <div className="todoWrapper">
           <h1>Todo List!</h1>
@@ -85,6 +102,31 @@ class TodoList extends Component {
         </div>
         <Styled addTodo={this.addTodo} />
       </div>
+      <Snackbar
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'right',
+      }}
+      open={this.state.open}
+      autoHideDuration={3000}
+      onClose={this.handleCloseSnackbar}
+      ContentProps={{
+        'aria-describedby': 'message-id',
+      }}
+      message={<span id="message-id">Todo removed!</span>}
+      action={[
+        <IconButton
+          key="close"
+          aria-label="Close"
+          color="inherit"
+          onClick={this.handleCloseSnackbar}
+        >
+          <CloseIcon />
+        </IconButton>,
+      ]} />
+
+
+      </>
     );
   }
 }
