@@ -24,6 +24,7 @@ If intreasted in the outcome, please head to https://todo-styledcomponets.web.ap
 - ability to set due date for the tasks,
 - improved styling,
 - 'Mark as Important' feature, which allows users to highlight the most important tasks ✅ and move them to the top of the list 🔜,
+- snackbar informing that task has been removed ✅
 
 ...more ideas to come
 
