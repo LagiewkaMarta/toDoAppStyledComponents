@@ -37,7 +37,8 @@ class SingleToDo extends Component {
       isEdited,
       toggle,
       className,
-      important
+      important,
+      date
     } = this.props;
     let rendered;
     if (!isEdited) {
@@ -56,6 +57,13 @@ class SingleToDo extends Component {
               {isEdited ? "update" : "edit"}
             </SmallBtn>
           </div>
+          <span style={{ color: "#f9b907", textShadow: "1px 1px #8c6504" }}>
+            {date.toDateString()}{" "}
+            {date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()}:
+            {date.getMinutes() < 10
+              ? `0${date.getMinutes()}`
+              : date.getMinutes()}
+          </span>
         </li>
       );
     } else {

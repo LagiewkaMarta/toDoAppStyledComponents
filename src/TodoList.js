@@ -29,9 +29,10 @@ class TodoList extends Component {
       })
     }
   //adding todo
-  addTodo = (name, important) => {
+  addTodo = (name, important, date) => {
     const todo = {
       name,
+      date,
       id: uuidv4(),
       isEdited: false, 
       completed: false,
@@ -96,6 +97,7 @@ class TodoList extends Component {
                 isEdited={el.isEdited}
                 toggle={this.toggleTodo}
                 important={el.important}
+                date={el.date}
               />
             ))}
           </ul>
@@ -141,7 +143,7 @@ const StyledTodoList = styled(TodoList)`
   color: ${setColor.fontColor};
  
   .todoWrapper {
-    width: 70%;
+    width: 90%;
     margin: 0 auto;
     h2 {
     font-size: ${setRem(22)};

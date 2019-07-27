@@ -1,13 +1,21 @@
 import React, { Component } from "react";
+import "react-datepicker/dist/react-datepicker.css";
+import "./custompicker.css";
+import DatePicker, { registerLocale }from "react-datepicker";
+import plPL from 'date-fns/locale/en-GB';
 import styled from "styled-components";
 import { StyledBtn } from "./StyledBtn";
-import { setColor, setFlexRow, setRem} from "./styles";
+import { setColor, setFlexRow, setRem } from "./styles";
+registerLocale('pl-PL', plPL);
+
 
 class NewTodoForm extends Component {
   state = {
     NewTodo: "",
-    important: false
-  };
+    important: false,
+    finishDate: new Date(),
+  }
+
   handleInputChange = e => {
     let name = e.target.name;
     let value =
@@ -19,11 +27,18 @@ class NewTodoForm extends Component {
 
   handleAddTodo = e => {
     e.preventDefault();
-    this.props.addTodo(this.state.NewTodo, this.state.important);
+    this.props.addTodo(this.state.NewTodo, this.state.important, this.state.finishDate);
     this.setState({
       NewTodo: ""
     });
   };
+
+  handleDateChange = date => {
+    this.setState({
+      finishDate: date
+    });
+  };
+
   render() {
     return (
       <Styled onSubmit={this.handleAddTodo}>
@@ -55,6 +70,22 @@ class NewTodoForm extends Component {
               Mark as Important<span className="span">Mark as Important</span>
             </label>
           </StyledCheckbox>
+
+          <DatePicker
+            selected={this.state.finishDate}
+            onChange={this.handleDateChange}
+            showTimeSelect
+            timeIntervals={60}
+            format="HH:mm"
+            dateFormat="Pp"
+            timeCaption="time"
+            placeholderText="Click to select a date"
+            minDate={new Date()}
+            locale="pl-PL"
+            isClearable={true}
+            withPortal
+            className="Datepicker"
+          />
         </div>
       </Styled>
     );
@@ -65,10 +96,10 @@ const Styled = styled.form`
   background-color: ${setColor.mainColor};
   padding: ${setRem(40)} 0;
   min-width: ${setRem(480)};
-  max-width: 40vw;
+  max-width: 90%;
   margin: 0 auto;
   .container {
-    width: 70%;
+    width: 80%;
     margin: 0 auto;
     padding: 0 ${setRem(5)};
     h3 {
@@ -82,7 +113,8 @@ const Styled = styled.form`
         width: ${setRem(180)};
       }
     }
-  }
+
+    }
 `;
 
 const StyledCheckbox = styled.div`

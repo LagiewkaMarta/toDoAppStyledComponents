@@ -1,0 +1,10 @@
+.Datepicker {
+    min-height:1.8rem;
+    margin-top: 1.5rem;
+}
+
+.react-datepicker__close-icon::after {
+line-height: initial;
+margin: .5rem 0 0;
+background-color: #f9b907;
+}
