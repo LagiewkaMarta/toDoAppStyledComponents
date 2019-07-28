@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import "react-datepicker/dist/react-datepicker.css";
-import "./custompicker.css";
 import DatePicker, { registerLocale }from "react-datepicker";
 import plPL from 'date-fns/locale/en-GB';
 import styled from "styled-components";
+import "react-datepicker/dist/react-datepicker.css";
+import "./custompicker.css";
 import { StyledBtn } from "./StyledBtn";
 import { setColor, setFlexRow, setRem } from "./styles";
 registerLocale('pl-PL', plPL);
@@ -27,7 +27,9 @@ class NewTodoForm extends Component {
 
   handleAddTodo = e => {
     e.preventDefault();
-    this.props.addTodo(this.state.NewTodo, this.state.important, this.state.finishDate);
+    const {NewTodo, important, finishDate} = this.state;
+    const {addTodo} = this.props; 
+    addTodo(NewTodo, important, finishDate);
     this.setState({
       NewTodo: ""
     });

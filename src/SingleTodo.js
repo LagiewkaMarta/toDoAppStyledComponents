@@ -7,6 +7,7 @@ class SingleToDo extends Component {
   state = {
     val: this.props.name
   };
+
   handleChange = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -14,13 +15,16 @@ class SingleToDo extends Component {
       [name]: value
     });
   };
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.edit(this.props.id, this.state.val);
   };
+
   handleRemove = () => {
     this.props.remove(this.props.id);
   };
+
   render() {
     const styleCompleted = {
       textDecoration: "line-through"
@@ -40,6 +44,7 @@ class SingleToDo extends Component {
       important,
       date
     } = this.props;
+
     let rendered;
     if (!isEdited) {
       rendered = (
@@ -57,18 +62,16 @@ class SingleToDo extends Component {
               {isEdited ? "update" : "edit"}
             </SmallBtn>
           </div>
-          <span style={{ color: "#f9b907", textShadow: "1px 1px #8c6504" }}>
+          <span className="date-info">
             {date.toDateString()}{" "}
             {date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()}:
-            {date.getMinutes() < 10
-              ? `0${date.getMinutes()}`
-              : date.getMinutes()}
+            {date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()}
           </span>
         </li>
       );
     } else {
       rendered = (
-        <li className={this.props.className}>
+        <li className={className}>
           <form onSubmit={this.handleSubmit}>
             <input
               name="val"
@@ -81,9 +84,7 @@ class SingleToDo extends Component {
               <SmallBtn type="button" onClick={this.handleRemove}>
                 remove
               </SmallBtn>
-              <SmallBtn type="submit">
-                {this.props.isEdited ? "update" : "edit"}
-              </SmallBtn>
+              <SmallBtn type="submit">{isEdited ? "update" : "edit"}</SmallBtn>
             </div>
           </form>
         </li>
@@ -95,7 +96,6 @@ class SingleToDo extends Component {
 
 export default styled(SingleToDo)`
   width: 100%;
-
   background-color: ${setColor.singleTodoColor};
   ${({ important }) =>
     important &&
@@ -106,6 +106,10 @@ export default styled(SingleToDo)`
   ${setFlexRow({ x: "space-between" })};
   padding: ${setRem(10)} ${setRem(20)};
   margin-top: ${setRem(20)};
+  .date-info {
+    color: #f9b907;
+    text-shadow: 1px 1px #8c6504;
+  }
   form {
     ${setFlexRow({ x: "space-between" })};
     width: 100%;
