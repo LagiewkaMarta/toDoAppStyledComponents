@@ -32,7 +32,7 @@ class SingleToDo extends Component {
     const styleInProgress = {
       textDecoration: "none"
     };
-    const {
+    let {
       id,
       completed,
       remove,
@@ -41,10 +41,11 @@ class SingleToDo extends Component {
       isEdited,
       toggle,
       className,
-      important,
       date
     } = this.props;
-
+    
+    date = new Date(date);
+    // console.log(date.getMinutes());
     let rendered;
     if (!isEdited) {
       rendered = (
@@ -62,11 +63,16 @@ class SingleToDo extends Component {
               {isEdited ? "update" : "edit"}
             </SmallBtn>
           </div>
-          <span className="date-info">
-            {date.toDateString()}{" "}
-            {date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()}:
-            {date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()}
-          </span>
+        
+          {date && (
+            <span className="date-info">
+              {date.toDateString()}{" "}
+              {date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()}:
+              {date.getMinutes() < 10
+                ? `0${date.getMinutes()}`
+                : date.getMinutes()}
+            </span>
+          )}
         </li>
       );
     } else {

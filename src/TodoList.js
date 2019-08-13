@@ -13,7 +13,7 @@ class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: [],
+      todos: this.getFromLocalStorage() || [],
       open: false
     };
   }
@@ -32,27 +32,43 @@ class TodoList extends Component {
     });
   };
 
+  //saving to local storage
+  saveToLocalStorage = () => {
+    localStorage.setItem("todos", JSON.stringify(this.state.todos));
+  };
+
+  // retrieving from local storage
+  getFromLocalStorage = () => {
+    console.log(JSON.parse(localStorage.getItem("todos")));
+    return JSON.parse(localStorage.getItem("todos"));
+  };
   //adding todo
   addTodo = (name, important, date) => {
     const todo = {
       name,
       date,
-      id: uuidv4(),
+      important,
       isEdited: false,
       completed: false,
-      important
+      id: uuidv4()
     };
+
     if (todo.name.length > 0) {
-      this.setState({
-        todos: [...this.state.todos, todo]
-      });
+      this.setState(
+        {
+          todos: [...this.state.todos, todo]
+        },
+        () => this.saveToLocalStorage()
+      );
     }
   };
 
   //removing todo
   removeTodo = id => {
     const filtered = [...this.state.todos].filter(el => el.id !== id);
-    this.setState({ todos: filtered, open: true });
+    this.setState({ todos: filtered, open: true }, () =>
+      this.saveToLocalStorage()
+    );
   };
 
   //editing todo
@@ -63,9 +79,12 @@ class TodoList extends Component {
       }
       return todo;
     });
-    this.setState({
-      todos: copy
-    });
+    this.setState(
+      {
+        todos: copy
+      },
+      () => this.saveToLocalStorage()
+    );
   };
 
   //toggling todo
@@ -76,9 +95,12 @@ class TodoList extends Component {
       }
       return todo;
     });
-    this.setState({
-      todos: copy
-    });
+    this.setState(
+      {
+        todos: copy
+      },
+      () => this.saveToLocalStorage()
+    );
   };
   render() {
     return (
