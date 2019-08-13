@@ -25,6 +25,7 @@ If intreasted in the outcome, please head to https://todo-styledcomponets.web.ap
 - improved styling,
 - 'Mark as Important' feature, which allows users to highlight the most important tasks ✅ and move them to the top of the list 🔜,
 - snackbar informing that task has been removed ✅
+- saving todos in local storage ✅
 
 ...more ideas to come
 
