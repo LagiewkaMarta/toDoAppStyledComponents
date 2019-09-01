@@ -44,8 +44,11 @@ class SingleToDo extends Component {
       date
     } = this.props;
     
-    date = new Date(date);
-    // console.log(date.getMinutes());
+    //if date exists and is not datepicker's default date convert it
+    if (date !== "" && date !== "2019-09-12T12:00:00.000Z" && date !== null){
+      date = new Date(date);
+    }
+    
     let rendered;
     if (!isEdited) {
       rendered = (
@@ -57,14 +60,7 @@ class SingleToDo extends Component {
           >
             {name}
           </span>
-          <div>
-            <SmallBtn onClick={() => remove(id)}>remove</SmallBtn>
-            <SmallBtn onClick={() => edit(id, this.state.val)}>
-              {isEdited ? "update" : "edit"}
-            </SmallBtn>
-          </div>
-        
-          {date && (
+          {(date !== "" && date !== null) && (
             <span className="date-info">
               {date.toDateString()}{" "}
               {date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()}:
@@ -73,6 +69,13 @@ class SingleToDo extends Component {
                 : date.getMinutes()}
             </span>
           )}
+          <div>
+            <SmallBtn onClick={() => remove(id)}>remove</SmallBtn>
+            <SmallBtn onClick={() => edit(id, this.state.val)}>
+              {isEdited ? "update" : "edit"}
+            </SmallBtn>
+          </div>
+        
         </li>
       );
     } else {

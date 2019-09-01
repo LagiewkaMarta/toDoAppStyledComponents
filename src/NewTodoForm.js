@@ -6,6 +6,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./custompicker.css";
 import { StyledBtn } from "./StyledBtn";
 import { setColor, setFlexRow, setRem } from "./styles";
+
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
 registerLocale('pl-PL', plPL);
 
 
@@ -13,9 +18,37 @@ class NewTodoForm extends Component {
   state = {
     NewTodo: "",
     important: false,
-    finishDate: new Date(),
+    finishDate: "",
+    alertOpen: false,
   }
 
+  //opnening alert
+  handleOpenAlert = () => {
+		this.setState({
+      alertOpen: true
+    });
+  };
+
+  // closing alert
+	handleCloseAlert = (e) => {
+    const shouldContinue = e.target.parentElement.value;
+		this.setState({
+      alertOpen: false
+    });
+
+    if (shouldContinue === "true") {
+      const {NewTodo, important, finishDate} = this.state;
+      const {addTodo} = this.props; 
+      addTodo(NewTodo, important, finishDate);
+      this.setState({
+        NewTodo: "",
+        important: false
+      });
+    } else {
+      return;
+    }
+  };
+  
   handleInputChange = e => {
     let name = e.target.name;
     let value =
@@ -29,10 +62,12 @@ class NewTodoForm extends Component {
     e.preventDefault();
     const {NewTodo, important, finishDate} = this.state;
     const {addTodo} = this.props; 
+    if(finishDate === "" || finishDate === null){
+      this.handleOpenAlert()
+      return;
+  } else {
     addTodo(NewTodo, important, finishDate);
-    this.setState({
-      NewTodo: ""
-    });
+  }
   };
 
   handleDateChange = date => {
@@ -43,6 +78,7 @@ class NewTodoForm extends Component {
 
   render() {
     return (
+      <>
       <Styled onSubmit={this.handleAddTodo}>
         <div className="container">
           <h3>New Todo</h3>
@@ -90,6 +126,26 @@ class NewTodoForm extends Component {
           />
         </div>
       </Styled>
+      <div>
+
+      <Dialog
+        open={this.state.alertOpen}
+        onClose={this.handleCloseAlert}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Are you sure you don't want to set due date?"}</DialogTitle>
+        <DialogActions>
+          <Button onClick={(e) => this.handleCloseAlert(e)} color="primary" value={false}>
+            No, set the date
+          </Button>
+          <Button onClick={(e) => this.handleCloseAlert(e)} color="primary" autoFocus value={true}>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+      </>
     );
   }
 }
