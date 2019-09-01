@@ -21,7 +21,7 @@ If intreasted in the outcome, please head to https://todo-styledcomponets.web.ap
 
 
 #### Features to be added in the future:
-- ability to set due date for the tasks 🌀 (currently in progress, requires some tweaks and refactoring),
+- ability to set due date for the tasks with an alert when the task we want to add has no due date ✅
 - improved styling,
 - 'Mark as Important' feature, which allows users to highlight the most important tasks ✅ and move them to the top of the list 🔜,
 - snackbar informing that task has been removed ✅
